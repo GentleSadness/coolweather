@@ -70,6 +70,8 @@ public class ChooseAreaActivity extends Activity {
      */
     private boolean isFromWeatherActivity;
 
+    private long exitTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,6 +257,13 @@ public class ChooseAreaActivity extends Activity {
             queryCities();
         } else if (currentLevel == LEVEL_CITY) {
             queryProvinces();
+        } else if (currentLevel == LEVEL_PROVINCE){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                Toast.makeText(this,"再按一次退出程序",Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            }else {
+                finish();
+            }
         } else {
             if (isFromWeatherActivity) {
                 Intent intent = new Intent(this, WeatherActivity.class);
